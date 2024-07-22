@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EduBot: Your Learning Companion</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .chatbot-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      width: 450px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .chat-box {
+      padding: 15px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      background-color: #e9ecef;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .chat-box.user {
+      background-color: #f8f9fa;
+      text-align: right;
+    }
+
+    .chat-box.bot {
+      text-align: left;
+    }
+
+    .chat-box:first-child { 
+      background-color: #f8f9fa;
+    }
+
+    .chat-box:last-child {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbot-container">
+    <h1>EduBot: Your Learning Companion</h1>
+
+    <div id="chatHistory">
+      <div class="chat-box bot">
+        Hi! I am EduBot, ready to answer your educational questions. Ask away!
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="questionInput" placeholder="Enter your question...">
+      <button id="sendButton">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const questionAnswers = {
+      "What is the capital of France?": "Paris",
+      "What is the chemical symbol for gold?": "Au",
+      "What is the largest planet in our solar system?": "Jupiter"
+    };
+
+    const chatHistory = document.getElementById("chatHistory");
+    const questionInput = document.getElementById("questionInput");
+    const sendButton = document.getElementById("sendButton");
+
+    function findAnswer(question) {
+      for (const q in questionAnswers) {
+        if (q.toLowerCase().includes(question.toLowerCase())) {
+          return questionAnswers[q];
+        }
+      }
+      return "I'm sorry, I don't have an answer for that question.";
+    }
+
+    sendButton.addEventListener("click", () => {
+      const question = questionInput.value;
+      if (question.trim() !== "") {
+        // Add user's question to chat history
+        const userMessage = document.createElement("div");
+        userMessage.classList.add("chat-box", "user");
+        userMessage.textContent = question;
+        chatHistory.appendChild(userMessage);
+
+        // Get and display answer
+        const answer = findAnswer(question);
+        const botMessage = document.createElement("div");
+        botMessage.classList.add("chat-box", "bot");
+        botMessage.textContent = answer;
+        chatHistory.appendChild(botMessage);
+
+        questionInput.value = ""; // Clear input field
+      }
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
